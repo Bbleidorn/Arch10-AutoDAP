@@ -1,21 +1,25 @@
 import pandas as pd
 
-def numerize_ordinals(data: pd.DataFrame, ordinal_columns: list, column_mapping: dict) -> pd.DataFrame:
+def numerize_ordinals(df: pd.DataFrame, ordinal_columns: list, column_mapping: dict) -> pd.DataFrame:
     """
     Preprocess ordinal data by mapping ordinal columns to numerical values.
 
-    Args:
-        data (pd.DataFrame): The input DataFrame containing ordinal data.
-        ordinal_columns (list): List of columns that contain ordinal data.
-        column_mapping (dict): Mapping of ordinal categories to numerical values.
+    Parameters:
+    - df: pd.DataFrame
+        The input DataFrame containing ordinal data.
+    - ordinal_columns: list
+        List of columns that contain ordinal data.
+    - column_mapping: dict
+        Mapping of ordinal categories to numerical values.
 
     Returns:
-        pd.DataFrame: DataFrame with ordinal columns converted to numerical values.
+    - df: pd.DataFrame
+        A DataFrame with ordinal columns converted to numerical values.
     """
     for col in ordinal_columns:
         if col in column_mapping:
-            data[col] = data[col].map(column_mapping[col])
-    return data
+            df[col] = df[col].map(column_mapping[col])
+    return df
 
 
 def one_hot_nominals(df: pd.DataFrame, nominal_columns: list) -> pd.DataFrame:
@@ -54,4 +58,3 @@ def categorize_numerics(df: pd.DataFrame, numeric_columns: list, bins: dict) -> 
         if col in bins:
             df[col] = pd.cut(df[col], bins=bins[col], labels=False)
     return df
-
