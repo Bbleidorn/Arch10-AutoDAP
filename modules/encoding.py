@@ -1,6 +1,6 @@
 import pandas as pd
 
-def numerize_ordinals(df: pd.DataFrame, ordinal_columns: list, column_mapping: dict) -> pd.DataFrame:
+def ordinal_to_numeric(df: pd.DataFrame, ordinal_columns: list, column_mapping: dict) -> pd.DataFrame:
     """
     Preprocess ordinal data by mapping ordinal columns to numerical values.
 
@@ -22,7 +22,7 @@ def numerize_ordinals(df: pd.DataFrame, ordinal_columns: list, column_mapping: d
     return df
 
 
-def one_hot_nominals(df: pd.DataFrame, nominal_columns: list) -> pd.DataFrame:
+def nominal_to_one_hot(df: pd.DataFrame, nominal_columns: list) -> pd.DataFrame:
     """
     One-hot encodes the specified nominal columns of a DataFrame.
 
@@ -38,7 +38,12 @@ def one_hot_nominals(df: pd.DataFrame, nominal_columns: list) -> pd.DataFrame:
     """
     return pd.get_dummies(df, columns=nominal_columns, drop_first=False)
 
-def categorize_numerics(df: pd.DataFrame, numeric_columns: list, bins: dict) -> pd.DataFrame:
+def one_hot_to_nominal(df: pd.DataFrame, original_column: str, one_hot_columns: list) -> pd.DataFrame:
+    df[original_column] = df[one_hot_columns].idxmax(axis=1).str.replace(f"{original_column}_", "")
+    return df.drop(columns=one_hot_columns)
+
+
+def numeric_to_categorical(df: pd.DataFrame, numeric_columns: list, bins: dict) -> pd.DataFrame:
     """
     Categorizes numeric columns into bins.
 
