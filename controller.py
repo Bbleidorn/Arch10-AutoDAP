@@ -1,30 +1,27 @@
 import streamlit as st
-
+import numpy as np
 
 class Controller:
 
     def __init__(self, projects):
-        
-        new_projects_page = {'Create new project': self.render_new_project}
-        projects_pages = { '{name}': self.render_existing_project(name) for name in projects}
+        self.initialize_session_state()
+        new_project_page = {'New project': self.render_new_project}
+        projects_pages = { name: self.render_existing_project(name) for name in projects}
 
-        self.pages = new_projects_page + projects_pages
-        
-        st.set_page_config(
-            page_title="AutoDAP",
-            page_icon="📊",
-            layout="wide",
-            initial_sidebar_state="expanded"
-        )
+        self.pages = new_project_page | projects_pages
 
         self.render_sidebar()
         self.render()
 
+    def initialize_session_state(self):
+        """Initialize session state variables"""
+        if 'current_page' not in st.session_state:
+            st.session_state.current_page = "New project"
 
     def render_sidebar(self):
         st.sidebar.title("AutoDAP")
          # Navigation
-        st.sidebar.subheader("Navigation")
+        st.sidebar.subheader("Projects")
         selected_page = st.sidebar.radio(
             "Go to:",
             list(self.pages.keys()),
@@ -35,14 +32,14 @@ class Controller:
             st.session_state.current_page = selected_page
 
         st.sidebar.divider()
-        st.render
+        self.render()
 
 
-    def render_new_project():
+    def render_new_project(self):
         st.markdown("New Project")
 
-    def render_existing_project(projectname: str):
-        st.markdown(projectname)
+    def render_existing_project(self, projectname: str):
+        st.markdown(f"{projectname}")
 
     def render(self):
         st.markdown("# AutoDAP")
