@@ -1,7 +1,7 @@
 # src/controllers/project_controller.py
 import streamlit as st
-from config.app_config import APP_TITLE
-from models.session_state import SessionState
+from config.app_config import AppConfig
+from session_state import SessionState
 from controllers.navigation_controller import NavigationController
 from views.components import sidebar, step_bar
 from views.pages import new_project, existing_project
@@ -13,7 +13,7 @@ class ProjectController:
         self.navigation_controller = NavigationController(self.session_state)
 
     def render(self):
-        st.title(APP_TITLE)
+        st.title(AppConfig.title)
         
         # Render sidebar and handle its logic via the controller
         sidebar.render_sidebar(self.navigation_controller, self.projects)
