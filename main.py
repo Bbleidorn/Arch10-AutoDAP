@@ -1,11 +1,11 @@
 import streamlit as st
 import logging
 
-from config import AppConfig
+from config.app_config import AppConfig
 from styles import CSS
 from database.database import DatabaseManager
 from services.project_service import ProjectService
-from controller import Controller
+from controllers.project_controller import ProjectController
 
 logging.basicConfig(
     level=logging.INFO,
@@ -30,7 +30,7 @@ def main():
     project_service = ProjectService(db_manager)
     all_projects = project_service.get_all_projects()
 
-    controller = Controller(all_projects)
+    controller = ProjectController(all_projects)
     controller.render()
 
 

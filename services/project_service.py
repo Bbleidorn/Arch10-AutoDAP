@@ -1,3 +1,5 @@
+import streamlit as st
+
 from database.database import DatabaseManager
 from database.project_repository import ProjectRepository
 from database.models import Project
