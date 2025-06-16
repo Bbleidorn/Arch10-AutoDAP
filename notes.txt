@@ -1,0 +1,5 @@
+Create database models
+Create service methods
+Replace the dummy content by real content
+Change complete project ui: everything exists only update
+Implement user system
